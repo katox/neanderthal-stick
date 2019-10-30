@@ -28,8 +28,14 @@ Add the necessary dependency to your project:
 
 ## Usage
 
-The basic usage is just to `save!` something to a stream and `load!` it back
-later. That's it!.
+The basic usage is just to
+[`save!`](https://katox.github.io/neanderthal-stick/neanderthal-stick.experimental.html#var-save)
+something to a stream and
+[`load!`](https://katox.github.io/neanderthal-stick/neanderthal-stick.experimental.html#var-load)
+it back later. That's it!.
+
+For reference documentation refer to the project
+[github pages](https://katox.github.io/neanderthal-stick/index.html).
 
 *Note*: The API is very early stage and subject to change thus it is
 in the `expertimental` namespace.
