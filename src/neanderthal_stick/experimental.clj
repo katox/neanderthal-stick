@@ -9,6 +9,7 @@
 (ns neanderthal-stick.experimental
   (:require [clojure.java.io :as io]
             [taoensso.nippy :as nippy]
+            [uncomplicate.commons.core :refer [let-release]]
             [uncomplicate.neanderthal.core :refer [transfer!]]
             [neanderthal-stick.core :refer [describe create]]
             [neanderthal-stick.internal.common :as common])
@@ -43,7 +44,10 @@
   ([factory data-in ext-options]
    (let [descriptor (nippy/thaw-from-in! data-in)
          options (merge (:ext-options descriptor) ext-options)]
-     (create factory descriptor data-in options)))
+     (let-release [x (create factory descriptor nil)]
+       (when-not (common/options-omit-data? options)
+         (transfer! data-in x))
+       x)))
   ([factory data-in]
    (load! factory data-in nil))
   ([data-in]

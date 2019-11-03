@@ -54,17 +54,16 @@
   [data-input]
   (let [factory *neanderthal-factory*
         descriptor (nippy/thaw-from-in! data-input)
-        ext-options (:ext-options descriptor)]
-    (if (or (nil? factory)
-            (common/native-factory? factory)
-            (common/options-omit-data? ext-options))
-      (create factory descriptor data-input ext-options)
-      (let [native-x (create nil descriptor data-input)]
+        ext-options (:ext-options descriptor)
+        input (when-not (common/options-omit-data? ext-options) data-input)]
+    (if (and factory input (not (common/native-factory? factory)))
+      (let [native-x (create nil descriptor input)]
         (let-release [x (api/raw native-x factory)]
           (try
             (transfer! native-x x)
             (finally
-              (release native-x))))))))
+              (release native-x)))))
+      (create factory descriptor input))))
 
 ;; =================== Extend Neanderthal Types with Nippy Protocols ===================
 

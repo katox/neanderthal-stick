@@ -101,21 +101,16 @@
 (defn create
   "Create a matrix or a vector using `factory` with parameters given by the `descriptor` map
    and content data `source`. The `source` can be the data source used to read the `descriptor`
-   of the structure. If the `factory` is nil the default factory is inferred from the entry data type.
-  `ext-options` can specify save/load options external to the data structure itself (for example
-  data omission)."
-  ([factory descriptor source ext-options]
+   of the structure. If the `factory` is nil the default factory is inferred from the entry data type."
+  ([factory descriptor source]
    (let [{:keys [entry-type]} descriptor
          inferred-factory (factory-by-type entry-type)
-         real-factory (or factory inferred-factory)
-         real-source (when-not (common/options-omit-data? ext-options) source)]
+         real-factory (or factory inferred-factory)]
      (if (common/entry-compatible? inferred-factory real-factory)
        (if (contains? descriptor :matrix-type)
-         (create-matrix real-factory descriptor real-source)
-         (create-vector real-factory descriptor real-source))
+         (create-matrix real-factory descriptor source)
+         (create-vector real-factory descriptor source))
        (dragan-says-ex "You must provide a compatible factory for this data input." {:entry-type entry-type}))))
-  ([factory descriptor source]
-   (create factory descriptor source nil))
   ([factory descriptor]
    (create factory descriptor nil))
   ([descriptor]
