@@ -64,27 +64,31 @@
                                                       :layout (gen/return (if (= uplo :lower) :column :row)))))
 
 (defn gen-ge-descriptor [factory]
-  (gen/hash-map :entry-type (gen/return (entry-type-kw factory))
+  (gen/hash-map :kind (gen/return :matrix)
+                :entry-type (gen/return (entry-type-kw factory))
                 :matrix-type (gen/return :ge)
                 :m gen-size
                 :n gen-size
                 :options (gen/hash-map :layout gen-layout)))
 
 (defn gen-sy-descriptor [factory]
-  (gen/hash-map :entry-type (gen/return (entry-type-kw factory))
+  (gen/hash-map :kind (gen/return :matrix)
+                :entry-type (gen/return (entry-type-kw factory))
                 :matrix-type (gen/return :sy)
                 :n gen-size
                 :options gen-col-low-or-row-upper-options))
 
 (defn gen-tr-descriptor [factory]
-  (gen/hash-map :entry-type (gen/return (entry-type-kw factory))
+  (gen/hash-map :kind (gen/return :matrix)
+                :entry-type (gen/return (entry-type-kw factory))
                 :matrix-type (gen/return :tr)
                 :n gen-size
                 :options gen-full-options))
 
 (defn gen-gb-descriptor [factory]
   (gen/let [[m n kl ku] gen-band]
-    (gen/hash-map :entry-type (gen/return (entry-type-kw factory))
+    (gen/hash-map :kind (gen/return :matrix)
+                  :entry-type (gen/return (entry-type-kw factory))
                   :matrix-type (gen/return :gb)
                   :m (gen/return m)
                   :n (gen/return n)
@@ -94,7 +98,8 @@
 
 (defn gen-sb-descriptor [factory]
   (gen/let [[n k] gen-sym-band]
-    (gen/hash-map :entry-type (gen/return (entry-type-kw factory))
+    (gen/hash-map :kind (gen/return :matrix)
+                  :entry-type (gen/return (entry-type-kw factory))
                   :matrix-type (gen/return :sb)
                   :n (gen/return n)
                   :k (gen/return k)
@@ -102,7 +107,8 @@
 
 (defn gen-tb-descriptor [factory]
   (gen/let [[n k] gen-sym-band]
-    (gen/hash-map :entry-type (gen/return (entry-type-kw factory))
+    (gen/hash-map :kind (gen/return :matrix)
+                  :entry-type (gen/return (entry-type-kw factory))
                   :matrix-type (gen/return :tb)
                   :n (gen/return n)
                   :k (gen/return k)
@@ -112,20 +118,23 @@
                                            :diag gen-diag)))))
 
 (defn gen-sp-descriptor [factory]
-  (gen/hash-map :entry-type (gen/return (entry-type-kw factory))
+  (gen/hash-map :kind (gen/return :matrix)
+                :entry-type (gen/return (entry-type-kw factory))
                 :matrix-type (gen/return :sp)
                 :n gen-size
                 :options (gen/hash-map :uplo gen-uplo
                                        :layout gen-layout)))
 
 (defn gen-tp-descriptor [factory]
-  (gen/hash-map :entry-type (gen/return (entry-type-kw factory))
+  (gen/hash-map :kind (gen/return :matrix)
+                :entry-type (gen/return (entry-type-kw factory))
                 :matrix-type (gen/return :tp)
                 :n gen-size
                 :options gen-full-options))
 
 (defn gen-diag-descriptor [factory matrix-type]
-  (gen/hash-map :entry-type (gen/return (entry-type-kw factory))
+  (gen/hash-map :kind (gen/return :matrix)
+                :entry-type (gen/return (entry-type-kw factory))
                 :matrix-type (gen/return matrix-type)
                 :n gen-size))
 
@@ -135,7 +144,8 @@
 (defn gen-st-descriptor [factory] (gen-diag-descriptor factory :st))
 
 (defn gen-vector-descriptor [factory]
-  (gen/hash-map :entry-type (gen/return (entry-type-kw factory))
+  (gen/hash-map :kind (gen/return :vector)
+                :entry-type (gen/return (entry-type-kw factory))
                 :n gen-size))
 
 (defn gen-matrix-descriptor [factory]

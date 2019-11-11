@@ -25,10 +25,10 @@
 (extend-protocol ContainerInfo
   IntegerBlockVector
   (describe [x]
-    {:entry-type (common/entry-type-kw x) :n (core/dim x)})
+    {:kind :vector :entry-type (common/entry-type-kw x) :n (core/dim x)})
   RealBlockVector
   (describe [x]
-    {:entry-type (common/entry-type-kw x) :n (core/dim x)})
+    {:kind :vector :entry-type (common/entry-type-kw x) :n (core/dim x)})
   RealGEMatrix
   (describe [x]
     (-> (common/describe-common x) (assoc :m (core/mrows x))))
@@ -42,7 +42,7 @@
         :sp (update dx :options #(merge % {:uplo uplo}))
         :sy (update dx :options #(merge % {:uplo uplo}))
         (dragan-says-ex (format "%s is not a valid matrix type. Please send a bug report." matrix-type)
-                              {:type matrix-type}))))
+                        {:type matrix-type}))))
   RealBandedMatrix
   (describe [x]
     (let [{:keys [matrix-type] :as dx} (common/describe-common x)
@@ -59,7 +59,7 @@
                        :kl kl
                        :ku ku))
         (dragan-says-ex (format "%s is not a valid matrix type. Please send a bug report." matrix-type)
-                              {:type matrix-type}))))
+                        {:type matrix-type}))))
   RealPackedMatrix
   (describe [x]
     (let [{:keys [matrix-type] :as dx} (common/describe-common x)
@@ -68,33 +68,44 @@
         :tp (update dx :options #(merge % {:uplo uplo :diag diag}))
         :sp (update dx :options #(merge % {:uplo uplo}))
         (dragan-says-ex (format "%s is not a valid matrix type. Please send a bug report." matrix-type)
-                              {:type matrix-type}))))
+                        {:type matrix-type}))))
   RealDiagonalMatrix
   (describe [x]
     (dissoc (common/describe-common x) :options)))
 
-(defn- create-vector [real-factory descriptor source]
+(defmulti create*
+          "Create a a structure of the given `kind` (internal API)."
+          (fn ([factory descriptor source] (:kind descriptor))))
+
+(defmethod create* :default
+  [_ descriptor _]
+  (dragan-says-ex (format "You need to define a new create* method to support %s structure!"
+                          (select-keys descriptor [:kind]))))
+
+(defmethod create* :vector
+  [factory descriptor source]
   (let [{:keys [n]} descriptor]
     (if source
-      (let-release [x (api/create-vector real-factory n false)]
+      (let-release [x (api/create-vector factory n false)]
         (transfer! source x))
-      (api/create-vector real-factory n true))))
+      (api/create-vector factory n true))))
 
-(defn- create-matrix [real-factory descriptor source]
+(defmethod create* :matrix
+  [factory descriptor source]
   (let [{:keys [matrix-type m n k kl ku options]} descriptor]
     (case matrix-type
-      :ge (core/ge real-factory m n source options)
-      :sy (core/sy real-factory n source options)
-      :tr (core/tr real-factory n source options)
-      :gb (core/gb real-factory m n kl ku source options)
-      :sb (core/sb real-factory n k source options)
-      :tb (core/tb real-factory n k source options)
-      :sp (core/sp real-factory n source options)
-      :tp (core/tp real-factory n source options)
-      :gt (core/gt real-factory n source options)
-      :gd (core/gd real-factory n source options)
-      :dt (core/dt real-factory n source options)
-      :st (core/st real-factory n source options)
+      :ge (core/ge factory m n source options)
+      :sy (core/sy factory n source options)
+      :tr (core/tr factory n source options)
+      :gb (core/gb factory m n kl ku source options)
+      :sb (core/sb factory n k source options)
+      :tb (core/tb factory n k source options)
+      :sp (core/sp factory n source options)
+      :tp (core/tp factory n source options)
+      :gt (core/gt factory n source options)
+      :gd (core/gd factory n source options)
+      :dt (core/dt factory n source options)
+      :st (core/st factory n source options)
       (dragan-says-ex (format "%s is not a valid matrix type. Please send a bug report." matrix-type)
                       {:type matrix-type}))))
 
@@ -107,9 +118,7 @@
          inferred-factory (factory-by-type entry-type)
          real-factory (or factory inferred-factory)]
      (if (common/entry-compatible? inferred-factory real-factory)
-       (if (contains? descriptor :matrix-type)
-         (create-matrix real-factory descriptor source)
-         (create-vector real-factory descriptor source))
+       (create* real-factory descriptor source)
        (dragan-says-ex "You must provide a compatible factory for this data input." {:entry-type entry-type}))))
   ([factory descriptor]
    (create factory descriptor nil))

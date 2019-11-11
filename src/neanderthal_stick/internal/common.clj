@@ -45,7 +45,8 @@
      :ku   (.ku reg)}))
 
 (defn describe-common [x]
-  {:entry-type  (entry-type-kw x)
+  {:kind :matrix
+   :entry-type  (entry-type-kw x)
    :matrix-type (core/matrix-type x)
    :n           (core/ncols x)
    :options     {:layout (layout x)}})

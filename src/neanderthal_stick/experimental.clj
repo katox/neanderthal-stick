@@ -44,7 +44,7 @@
   ([factory data-in ext-options]
    (let [descriptor (nippy/thaw-from-in! data-in)
          options (merge (:ext-options descriptor) ext-options)]
-     (let-release [x (create factory descriptor nil)]
+     (let-release [x (create factory descriptor)]
        (when-not (common/options-omit-data? options)
          (transfer! data-in x))
        x)))
