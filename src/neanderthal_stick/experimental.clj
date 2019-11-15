@@ -34,8 +34,8 @@
    (with-open [out (DataOutputStream. (io/output-stream (io/file file-path)))]
      (save! x out ext-options))
    nil)
-  ([x f]
-   (save-to-file! x f nil)))
+  ([x file-path]
+   (save-to-file! x file-path nil)))
 
 (defn load!
   "Load a Neanderthal matrix or a vector from the `data-in` stream using the `factory` for construction.
@@ -61,7 +61,7 @@
   ([factory file-path ext-options]
    (with-open [in (DataInputStream. (io/input-stream (io/file file-path)))]
      (load! factory in ext-options)))
-  ([factory f]
-   (load-from-file! factory f nil))
-  ([f]
-   (load-from-file! nil f nil)))
+  ([factory file-path]
+   (load-from-file! factory file-path nil))
+  ([file-path]
+   (load-from-file! nil file-path nil)))
