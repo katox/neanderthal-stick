@@ -308,6 +308,18 @@ empty-ge-copy
 ;   ┗                       ┛    
 ```
 
+### Defining New Structure That Supports Save/Load
+
+If you need to define your own structures (new structure *kinds*)
+you can still have it supported by **neanderthal-stick** but it is
+a little bit more involved.
+
+There is an example in the repository:
+[examples/def-new-kind](https://github.com/katox/neanderthal-stick/tree/master/examples/def-new-kind/).
+
+TLDR; you need to define a new self-description ability, a constructor
+from that descriptor and the actual content save and load `transfer!` multimethods.
+
 ## License
 
 Copyright © 2019 Kamil Toman
