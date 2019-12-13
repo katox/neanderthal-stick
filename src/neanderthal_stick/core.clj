@@ -79,8 +79,11 @@
 
 (defmethod create* :default
   [_ descriptor _]
-  (dragan-says-ex (format "You need to define a new create* method to support %s structure!"
-                          (select-keys descriptor [:kind]))))
+  (if (contains? descriptor :kind)
+    (dragan-says-ex (format "You need to define a new create* method to support %s structure!"
+                            (select-keys descriptor [:kind])))
+    (dragan-says-ex (format "You must include the missing :kind attribute in the structure descriptor!"
+                            descriptor))))
 
 (defmethod create* :vector
   [factory descriptor source]

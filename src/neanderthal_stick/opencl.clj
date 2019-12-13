@@ -17,7 +17,7 @@
 (extend-protocol ContainerInfo
   CLBlockVector
   (describe [x]
-    {:entry-type (common/entry-type-kw x) :n (core/dim x)})
+    {:kind :vector :entry-type (common/entry-type-kw x) :n (core/dim x)})
   CLGEMatrix
   (describe [x]
     (-> (common/describe-common x) (assoc :m (core/mrows x))))
