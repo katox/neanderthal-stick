@@ -1,4 +1,4 @@
-(defproject neanderthal-stick "0.2.0"
+(defproject neanderthal-stick "0.3.0-SNAPSHOT"
   :description "Save/Load Extensions for Neanderthal, Fast Clojure Matrix Library"
   :url "https://github.com/katox/neanderthal-stick"
   :license {:name "Eclipse Public License 2.0"
