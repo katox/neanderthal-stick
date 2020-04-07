@@ -1,10 +1,10 @@
-(defproject neanderthal-stick "0.2.0-SNAPSHOT"
+(defproject neanderthal-stick "0.2.0"
   :description "Save/Load Extensions for Neanderthal, Fast Clojure Matrix Library"
   :url "https://github.com/katox/neanderthal-stick"
   :license {:name "Eclipse Public License 2.0"
             :url "https://www.eclipse.org/org/documents/epl-2.0/EPL-2.0.html"}
   :dependencies [[org.clojure/clojure "1.10.1"]
-                 [uncomplicate/neanderthal "0.27.0"]
+                 [uncomplicate/neanderthal "0.29.0"]
                  [com.taoensso/nippy "2.14.0"]]
 
   :codox {:metadata {:doc/format :markdown}
@@ -29,7 +29,7 @@
                                  *unchecked-math* :warn-on-boxed
                                  *print-length* 128}
                    :dependencies [[midje "1.9.9"]
-                                  [org.clojure/test.check "0.10.0"]]}
+                                  [org.clojure/test.check "1.0.0"]]}
              :java8 {:jvm-opts ^:replace ["-Dclojure.compiler.direct-linking=true"]}}
 
   :javac-options ["-target" "1.8" "-source" "1.8" "-Xlint:-options"]
