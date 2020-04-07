@@ -6,7 +6,7 @@ using [neaderthal-stick](https://github.com/katox/neanderthal-stick).
 
 ## License
 
-Copyright © 2019 Kamil Toman
+Copyright © 2019-2020 Kamil Toman
 
 This program and the accompanying materials are made available under the
 terms of the Eclipse Public License 2.0 which is available at
