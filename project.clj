@@ -4,7 +4,7 @@
   :license {:name "Eclipse Public License 2.0"
             :url "https://www.eclipse.org/org/documents/epl-2.0/EPL-2.0.html"}
   :dependencies [[org.clojure/clojure "1.10.1"]
-                 [uncomplicate/neanderthal "0.29.0"]
+                 [uncomplicate/neanderthal "0.31.0"]
                  [com.taoensso/nippy "2.14.0"]]
 
   :codox {:metadata {:doc/format :markdown}
