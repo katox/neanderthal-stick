@@ -23,7 +23,7 @@ a factory.
 Add the necessary dependency to your project:
 
 ```$clj
-    [neanderthal-stick "0.2.0]
+    [neanderthal-stick "0.3.0]
 ```
 
 ## Usage
@@ -322,7 +322,7 @@ from that descriptor and the actual content save and load `transfer!` multimetho
 
 ## License
 
-Copyright © 2019 Kamil Toman
+Copyright © 2019-2020 Kamil Toman
 
 This program and the accompanying materials are made available under the
 terms of the Eclipse Public License 2.0 which is available at

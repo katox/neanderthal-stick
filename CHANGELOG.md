@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file. This change
 
 ## [Unreleased]
 ## Changes
+
+## [0.3.0] - 2020-04-23
+### Changed
+- Updated to the Neanderthal 0.31 release.
 - Documentation updates
 
 ## [0.2.0] - 2020-04-07
