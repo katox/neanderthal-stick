@@ -23,7 +23,7 @@ a factory.
 Add the necessary dependency to your project:
 
 ```$clj
-    [neanderthal-stick "0.3.0]
+    [neanderthal-stick "0.4.0]
 ```
 
 ## Usage
