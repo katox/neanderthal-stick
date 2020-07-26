@@ -2,7 +2,12 @@
 All notable changes to this project will be documented in this file. This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
+
+## [0.4.0] - 2020-07-26
 ## Changes
+- Updated to the Neanderthal 0.33 release.
+- Updated to the Nippy 2.15.0 release.
+- Test newly supported types of submatrices with neanderthal-stick extensions.
 
 ## [0.3.0] - 2020-04-23
 ### Changed
