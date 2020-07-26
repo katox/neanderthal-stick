@@ -43,6 +43,12 @@
                                                   (gen/return k)
                                                   (gen/return l)))))
 
+(def gen-sym-submatrix-indexes (gen/bind gen-sym-band
+                                         (fn [[^long n ^long k]]
+                                           (gen/tuple (gen/return n)
+                                                      (gen/large-integer* {:min 0 :max (max 0 (dec (- n k)))})
+                                                      (gen/return k)))))
+
 (def gen-banded-submatrix-indexes (gen/bind gen-band
                                             (fn [[^long m ^long n ^long kl ^long ku]]
                                               (gen/tuple (gen/return m)

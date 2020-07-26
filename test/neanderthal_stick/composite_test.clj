@@ -50,16 +50,28 @@
 (nippy-ext-test/tb-round-trip-test native-double)
 (nippy-ext-test/tb-round-trip-test native-float)
 
-; matrix types below don't support submatrices
+; packed matrix types don't support submatrices
 (nippy-ext-test/tp-round-trip-test native-double)
 (nippy-ext-test/tp-round-trip-test native-float)
 (nippy-ext-test/sp-round-trip-test native-double)
 (nippy-ext-test/sp-round-trip-test native-float)
+
 (nippy-ext-test/gd-round-trip-test native-double)
 (nippy-ext-test/gd-round-trip-test native-float)
+(nippy-ext-test/submatrix-gd-round-trip-test native-double)
+(nippy-ext-test/submatrix-gd-round-trip-test native-float)
+
 (nippy-ext-test/gt-round-trip-test native-double)
 (nippy-ext-test/gt-round-trip-test native-float)
+(nippy-ext-test/submatrix-gt-round-trip-test native-double)
+(nippy-ext-test/submatrix-gt-round-trip-test native-float)
+
 (nippy-ext-test/dt-round-trip-test native-double)
 (nippy-ext-test/dt-round-trip-test native-float)
+(nippy-ext-test/submatrix-dt-round-trip-test native-double)
+(nippy-ext-test/submatrix-dt-round-trip-test native-float)
+
 (nippy-ext-test/st-round-trip-test native-double)
 (nippy-ext-test/st-round-trip-test native-float)
+(nippy-ext-test/submatrix-st-round-trip-test native-double)
+(nippy-ext-test/submatrix-st-round-trip-test native-float)

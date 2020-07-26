@@ -173,6 +173,20 @@
                            b (nippy/thaw (nippy/freeze a))]
               (= a b) => true)))))
 
+(defn submatrix-gd-round-trip-test [factory]
+  (with-release [vctr-source (create-random-vector factory (* MAX-SIZE MAX-SIZE))]
+    (for-all
+      [[^long n ^long i ^long k] gen-sym-submatrix-indexes
+       layout gen-layout]
+      {:num-tests 100}
+      (fact "Diagonal submatrix freeze/thaw should round-trip"
+            (with-release [x (gd factory n vctr-source {:layout layout})
+                           a (submatrix x i i k k)]
+              (if (or (zero? (dim a)) (block/contiguous? a))
+                (with-release [b (nippy/thaw (nippy/freeze a))]
+                  (= a b) => true)
+                (nippy/freeze a) => (throws ExceptionInfo)))))))
+
 (defn gt-round-trip-test [factory]
   (with-release [vctr-source (create-random-vector factory (tridiagonal-items MAX-SIZE))]
     (for-all
@@ -182,6 +196,20 @@
             (with-release [a (gt factory n vctr-source nil)
                            b (nippy/thaw (nippy/freeze a))]
               (= a b) => true)))))
+
+(defn submatrix-gt-round-trip-test [factory]
+  (with-release [vctr-source (create-random-vector factory (* MAX-SIZE MAX-SIZE))]
+    (for-all
+      [[^long n ^long i ^long k] gen-sym-submatrix-indexes
+       layout gen-layout]
+      {:num-tests 100}
+      (fact "Tridiagonal submatrix freeze/thaw should round-trip"
+            (with-release [x (gt factory n vctr-source {:layout layout})
+                           a (submatrix x i i k k)]
+              (if (or (zero? (dim a)) (block/contiguous? a))
+                (with-release [b (nippy/thaw (nippy/freeze a))]
+                  (= a b) => true)
+                (nippy/freeze a) => (throws ExceptionInfo)))))))
 
 (defn dt-round-trip-test [factory]
   (with-release [vctr-source (create-random-vector factory (tridiagonal-items MAX-SIZE))]
@@ -193,6 +221,19 @@
                            b (nippy/thaw (nippy/freeze a))]
               (= a b) => true)))))
 
+(defn submatrix-dt-round-trip-test [factory]
+  (with-release [vctr-source (create-random-vector factory (* MAX-SIZE MAX-SIZE))]
+    (for-all
+      [[^long n ^long i ^long k] gen-sym-submatrix-indexes]
+      {:num-tests 100}
+      (fact "Diagonally dominant tridiagonal submatrix freeze/thaw should round-trip"
+            (with-release [x (dt factory n vctr-source nil)
+                           a (submatrix x i i k k)]
+              (if (or (zero? (dim a)) (block/contiguous? a))
+                (with-release [b (nippy/thaw (nippy/freeze a))]
+                  (= a b) => true)
+                (nippy/freeze a) => (throws ExceptionInfo)))))))
+
 (defn st-round-trip-test [factory]
   (with-release [vctr-source (create-random-vector factory (bidiagonal-items MAX-SIZE))]
     (for-all
@@ -202,3 +243,16 @@
             (with-release [a (st factory n vctr-source nil)
                            b (nippy/thaw (nippy/freeze a))]
               (= a b) => true)))))
+
+(defn submatrix-st-round-trip-test [factory]
+  (with-release [vctr-source (create-random-vector factory (bidiagonal-items MAX-SIZE))]
+    (for-all
+      [[^long n ^long i ^long k] gen-sym-submatrix-indexes]
+      {:num-tests 100}
+      (fact "Diagonally dominant tridiagonal submatrix freeze/thaw should round-trip"
+            (with-release [x (st factory n vctr-source nil)
+                           a (submatrix x i i k k)]
+              (if (or (zero? (dim a)) (block/contiguous? a))
+                (with-release [b (nippy/thaw (nippy/freeze a))]
+                  (= a b) => true)
+                (nippy/freeze a) => (throws ExceptionInfo)))))))
