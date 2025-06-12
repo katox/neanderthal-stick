@@ -15,9 +15,9 @@
             [uncomplicate.neanderthal.internal.api :as api]
             [neanderthal-stick.internal.common :as common]
             [neanderthal-stick.internal.buffer])
-  (:import (uncomplicate.neanderthal.internal.host.buffer_block RealBlockVector IntegerBlockVector
-                                                                RealGEMatrix RealUploMatrix RealBandedMatrix
-                                                                RealPackedMatrix RealDiagonalMatrix)))
+  (:import (uncomplicate.neanderthal.internal.cpp.structures RealBlockVector IntegerBlockVector
+                                                             RealGEMatrix RealUploMatrix RealBandedMatrix
+                                                             RealPackedMatrix RealDiagonalMatrix)))
 
 (defprotocol ContainerInfo
   (describe [this] "Get the description map of container parameters that can be used to re-create the vector/matrix."))

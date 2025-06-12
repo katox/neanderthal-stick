@@ -70,7 +70,7 @@
 
 ;; =================== Extend Neanderthal Types with Nippy Protocols ===================
 
-(nippy/extend-freeze uncomplicate.neanderthal.internal.host.buffer_block.RealBlockVector
+(nippy/extend-freeze uncomplicate.neanderthal.internal.cpp.structures.RealBlockVector
                      :uncomplicate.neanderthal/RealBlockVector
                      [x data-output]
                      (freeze-to-out! data-output x))
@@ -79,7 +79,7 @@
                    [data-input]
                    (thaw-from-in! data-input))
 
-(nippy/extend-freeze uncomplicate.neanderthal.internal.host.buffer_block.IntegerBlockVector
+(nippy/extend-freeze uncomplicate.neanderthal.internal.cpp.structures.IntegerBlockVector
                      :uncomplicate.neanderthal/IntegerBlockVector
                      [x data-output]
                      (freeze-to-out! data-output x))
@@ -88,7 +88,7 @@
                    [data-input]
                    (thaw-from-in! data-input))
 
-(nippy/extend-freeze uncomplicate.neanderthal.internal.host.buffer_block.RealGEMatrix
+(nippy/extend-freeze uncomplicate.neanderthal.internal.cpp.structures.RealGEMatrix
                      :uncomplicate.neanderthal/RealGEMatrix
                      [x data-output]
                      (freeze-to-out! data-output x))
@@ -97,7 +97,7 @@
                    [data-input]
                    (thaw-from-in! data-input))
 
-(nippy/extend-freeze uncomplicate.neanderthal.internal.host.buffer_block.RealUploMatrix
+(nippy/extend-freeze uncomplicate.neanderthal.internal.cpp.structures.RealUploMatrix
                      :uncomplicate.neanderthal/RealUploMatrix
                      [x data-output]
                      (freeze-to-out! data-output x))
@@ -106,7 +106,7 @@
                    [data-input]
                    (thaw-from-in! data-input))
 
-(nippy/extend-freeze uncomplicate.neanderthal.internal.host.buffer_block.RealBandedMatrix
+(nippy/extend-freeze uncomplicate.neanderthal.internal.cpp.structures.RealBandedMatrix
                      :uncomplicate.neanderthal/RealBandedMatrix
                      [x data-output]
                      (freeze-to-out! data-output x))
@@ -115,7 +115,7 @@
                    [data-input]
                    (thaw-from-in! data-input))
 
-(nippy/extend-freeze uncomplicate.neanderthal.internal.host.buffer_block.RealPackedMatrix
+(nippy/extend-freeze uncomplicate.neanderthal.internal.cpp.structures.RealPackedMatrix
                      :uncomplicate.neanderthal/RealPackedMatrix
                      [x data-output]
                      (freeze-to-out! data-output x))
@@ -124,7 +124,7 @@
                    [data-input]
                    (thaw-from-in! data-input))
 
-(nippy/extend-freeze uncomplicate.neanderthal.internal.host.buffer_block.RealDiagonalMatrix
+(nippy/extend-freeze uncomplicate.neanderthal.internal.cpp.structures.RealDiagonalMatrix
                      :uncomplicate.neanderthal/RealDiagonalMatrix
                      [x data-output]
                      (freeze-to-out! data-output x))

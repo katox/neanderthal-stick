@@ -13,13 +13,15 @@
             [uncomplicate.neanderthal.block :as block]
             [uncomplicate.neanderthal.core :as core :refer [transfer!]]
             [uncomplicate.neanderthal.internal.api :as api]
-            [uncomplicate.neanderthal.internal.host.buffer-block])
+            [uncomplicate.neanderthal.internal.cpp.structures]
+            [uncomplicate.fluokitten.protocols :refer [extract]])
   (:import (java.io OutputStream InputStream DataOutput DataInput)
            (java.nio ByteBuffer)
            (java.nio.channels Channels)
+           (org.bytedeco.javacpp Pointer)
            (uncomplicate.neanderthal.internal.api RealNativeMatrix VectorSpace Block DataAccessor
                                                   CUVector CUMatrix CLVector CLMatrix)
-           (uncomplicate.neanderthal.internal.host.buffer_block IntegerBlockVector RealBlockVector)))
+           (uncomplicate.neanderthal.internal.cpp.structures IntegerBlockVector RealBlockVector)))
 
 
 (defn- write-buffer [^OutputStream out ^ByteBuffer native-buffer ^long offset]
@@ -40,7 +42,7 @@
   (when (pos? (.dim ^VectorSpace source-vctr))
     (let [offset (.offset source-vctr)
           entry-width (.entryWidth (api/data-accessor source-vctr))
-          buf (.buffer source-vctr)]
+          buf (.asByteBuffer ^Pointer (extract source-vctr))]
       (write-buffer out buf (* entry-width offset)))))
 
 (defn read-vctr-data!
@@ -49,7 +51,7 @@
   (when (pos? (.dim ^VectorSpace destination-vctr))
     (let [offset (.offset destination-vctr)
           entry-width (.entryWidth (api/data-accessor destination-vctr))
-          buf (.buffer destination-vctr)]
+          buf (.asByteBuffer ^Pointer (extract destination-vctr))]
       (read-buffer in buf (* entry-width offset)))))
 
 (defmethod transfer! [IntegerBlockVector DataOutput]
