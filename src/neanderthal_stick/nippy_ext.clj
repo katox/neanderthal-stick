@@ -24,7 +24,7 @@
   ```
       (clojurecuda/with-default
          (with-open [in (DataInputStream. (io/input-stream (io/file \"/tmp/my_matrix.bin\")))]
-             (with-neanderthal-factory (cuda-double (current-context) default-stream)
+             (with-real-factory (cuda-double (current-context) default-stream)
                  (nippy/thaw-from-in! in)))
   ```
   "
