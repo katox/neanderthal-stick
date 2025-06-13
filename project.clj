@@ -23,13 +23,13 @@
   :repl-options {:init-ns neanderthal-stick.core}
 
   :profiles {:dev {:plugins [[lein-midje "3.2.1"]
-                             [lein-codox "0.10.6"]]
+                             [lein-codox "0.10.8"]]
                    :global-vars {*warn-on-reflection* true
                                  *assert* false
                                  *unchecked-math* :warn-on-boxed
                                  *print-length* 128}
-                   :dependencies [[midje "1.9.9"]
-                                  [org.clojure/test.check "1.0.0"]]}
+                   :dependencies [[midje "1.10.10"]
+                                  [org.clojure/test.check "1.1.1"]]}
              :java8 {:jvm-opts ^:replace ["-Dclojure.compiler.direct-linking=true"]}}
 
   :javac-options ["-target" "1.8" "-source" "1.8" "-Xlint:-options"]
