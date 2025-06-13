@@ -12,7 +12,8 @@
             [uncomplicate.neanderthal.cuda]
             [neanderthal-stick.core :refer [ContainerInfo describe]]
             [neanderthal-stick.internal.common :as common])
-  (:import (uncomplicate.neanderthal.internal.device.cublock CUBlockVector CUGEMatrix CUUploMatrix)))
+  (:import (uncomplicate.neanderthal.internal.cpp.cuda.structures
+             CUBlockVector CUGEMatrix CUUploMatrix)))
 
 (extend-protocol ContainerInfo
   CUBlockVector

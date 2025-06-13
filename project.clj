@@ -6,6 +6,9 @@
   :dependencies [[org.clojure/clojure "1.12.0"]
                  [uncomplicate/neanderthal "0.53.2"]
                  [org.bytedeco/mkl "2025.0-1.5.11" :classifier "linux-x86_64-redist"]
+                 [org.bytedeco/cuda "12.9-9.9-1.5.12-SNAPSHOT" :classifier "linux-x86_64-redist"]
+                 ;[org.bytedeco/mkl "2025.0-1.5.11" :classifier "windows-x86_64-redist"]
+                 ;[org.bytedeco/cuda "12.9-9.9-1.5.12-SNAPSHOT" :classifier "windows-x86_64-redist"]
                  [com.taoensso/nippy "3.5.0"]]
 
   :codox {:metadata {:doc/format :markdown}
@@ -34,4 +37,9 @@
 
   :javac-options ["-target" "1.8" "-source" "1.8" "-Xlint:-options"]
   :source-paths ["src"]
-  :test-paths ["test"])
+  :test-paths ["test"]
+
+  :repositories [["sonatype-snapshots" {:id  "SonatypeSnapshots"
+                                        :url "https://oss.sonatype.org/content/repositories/snapshots/"}]
+                 ["sonatype-releases" {:id  "SonatypeReleases"
+                                       :url "https://oss.sonatype.org/content/repositories/releases/"}]])
