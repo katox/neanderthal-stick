@@ -18,8 +18,7 @@
           :output-path "doc/codox"}
 
   ;;also replaces lein's default JVM argument TieredStopAtLevel=1
-  :jvm-opts ^:replace ["-Dclojure.compiler.direct-linking=true"
-                       "--add-opens=java.base/jdk.internal.ref=ALL-UNNAMED"]
+  :jvm-opts ^:replace ["-Dclojure.compiler.direct-linking=true"]
 
   :repl-options {:init-ns neanderthal-stick.core}
 

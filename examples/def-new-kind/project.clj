@@ -8,7 +8,5 @@
   :repl-options {:init-ns def-new-kind.core}
   :profiles {:java8 {:jvm-opts ^:replace ["-XX:+TieredCompilation" "-XX:TieredStopAtLevel=1"]}}
 
-  :jvm-opts ["--add-opens=java.base/jdk.internal.ref=ALL-UNNAMED"]
-
   :javac-options ["-target" "1.8" "-source" "1.8" "-Xlint:-options"]
   :source-paths ["src"])
