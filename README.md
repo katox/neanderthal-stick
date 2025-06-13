@@ -22,8 +22,17 @@ a factory.
 
 Add the necessary dependency to your project:
 
-```$clj
-    [neanderthal-stick "0.4.0]
+```$clojure
+    [neanderthal-stick "0.5.0-SNAPSHOT"]
+```
+
+## Running Tests
+
+Use the development profile so that the native libraries are available when
+running the Midje test suite:
+
+```bash
+lein with-profile dev midje
 ```
 
 ## Usage
@@ -38,7 +47,7 @@ For reference documentation refer to the project
 [github pages](https://katox.github.io/neanderthal-stick/index.html).
 
 *Note*: The API is very early stage and subject to change thus it is
-in the `expertimental` namespace.
+in the `experimental` namespace.
 
 ### Saving to File
 
@@ -46,7 +55,7 @@ If the final destination is a standard file and you only need to save or load
 one thing you can use the convenience functions `save-to-file!` and
 `load-from-file!` respectively to handle opening and closing the file for you.
 
-```$clj
+```$clojure
 (require '[uncomplicate.commons.core :refer [let-release with-release release]]
          '[uncomplicate.neanderthal.native :refer [native-double dv dge dtr]]
          '[uncomplicate.neanderthal.core :as core :refer [transfer!]]
@@ -76,7 +85,7 @@ you have to require the proper namespace (`opencl` or `cuda`) to let
 it initialize.
 
 When saving there is no other setup to do:
-```$clj
+```$clojure
 (require '[uncomplicate.clojurecl.core :as clojurecl :refer [*context* *command-queue* finish!]]
          '[uncomplicate.neanderthal.opencl :refer [with-default-engine opencl-double]]
          '[neanderthal-stick.opencl])
@@ -92,7 +101,7 @@ When saving there is no other setup to do:
 
 and you can load the saved structure normally:
 
-```$clj
+```$clojure
 (exp/load-from-file! "/tmp/ge.bin")
 ;=> #RealGEMatrix[double, mxn:10000x10000, layout:column, offset:0]
 ;   ▥       ↓       ↓       ↓       ↓       ↓       ┓    
@@ -113,7 +122,7 @@ you to switch contexts as needed (even from OpenCL to CUDA) by providing
 a factory to the load function - the factory used when saving isn't
 important. The entry data type (`double` or `float`) must match though.
 
-```$clj
+```$clojure
 (require '[uncomplicate.clojurecuda.core :as clojurecuda :refer [current-context with-context default-stream]]
          '[uncomplicate.neanderthal.cuda :refer [cuda-float cuda-double]]
          '[neanderthal-stick.cuda])
@@ -140,7 +149,7 @@ to [Nippy](https://github.com/ptaoussanis/nippy) for user-facing neanderthal typ
 To use it it is sufficient to require Nippy's main namespace as well as the `nippy-ext`
 namespace. From that point on you can use it with Nippy as any other built-in Clojure type.
 
-```$clj
+```$clojure
 (require '[taoensso.nippy :as nippy]
          '[neanderthal-stick.nippy-ext :refer [with-real-factory]])
 
@@ -168,7 +177,7 @@ You can use the Nippy extension including composite structures
 with the caveat that you still need to manually`release` neanderthal types
 when finished.
 
-```$clj
+```$clojure
 (def composite {:single (dv 1.0)
                 :double (dv 1.0 2.0)
                 :hexa   (dge 3 2 (range 1 7) (:layout :row))})
@@ -199,7 +208,7 @@ save and load composite types it is probably easier to create a new
 type that also implements `uncomplicate.commons.core/Releaseable`
 and Nippy's protocols.
 
-```$clj
+```$clojure
 (clojurecuda/with-default
   (with-real-factory (cuda-double (current-context) default-stream)
       (let [{:keys [single double hexa] :as composite} (nippy/thaw frozen-composite)]
@@ -227,11 +236,11 @@ For performance reasons you can only save structures
 that provide a dense vector view. The rule of the thumb
 is that if its stride is bigger than one you have to make a copy.
 
-```$clj
+```$clojure
 (with-release [bigm (dge 10000 10000 src-vctr)
                small-view (core/submatrix bigm 3 2)]
   (exp/save-to-file! small-view "/tmp/small_ge_view.bin"))
-;Execution error (ExceptionInfo) at uncomplicate.neanderthal.internal.host.buffer_block.RealGEMatrix/view_vctr (buffer_block.clj:848).
+;Execution error (ExceptionInfo) at uncomplicate.neanderthal.internal.cpp.structures/eval17850$fn (structures.clj:1180).
 ;Strided GE matrix cannot be viewed as a dense vector.
 
 (with-release [bigm (dge 10000 10000 src-vctr)
@@ -262,7 +271,7 @@ back to it. As a source you can use a different object or even a data
 stream. The transmission size is adjusted automatically according
 to the destination capacity.
 
-```$clj
+```$clojure
 (require '[clojure.java.io :as io])
 (import '[java.io DataOutputStream DataInputStream])
 

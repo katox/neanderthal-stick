@@ -2,7 +2,7 @@
 
 An example that shows what's needed to add a new
 kind (a deftyped structure) that can be a saved and loaded
-using [neaderthal-stick](https://github.com/katox/neanderthal-stick).
+using [neanderthal-stick](https://github.com/katox/neanderthal-stick).
 
 ## License
 
