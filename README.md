@@ -331,7 +331,7 @@ from that descriptor and the actual content save and load `transfer!` multimetho
 
 ## License
 
-Copyright © 2019-2020 Kamil Toman
+Copyright © 2019-2025 Kamil Toman
 
 This program and the accompanying materials are made available under the
 terms of the Eclipse Public License 2.0 which is available at
