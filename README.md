@@ -35,6 +35,33 @@ running the Midje test suite:
 lein with-profile +dev midje
 ```
 
+Running the "integration" tests too:
+
+```bash
+lein with-profile +dev,+integration midje
+```
+
+Running hardware-dependent integration tests requires matching local
+hardware and drivers. Enable them explicitly.
+
+CUDA integration:
+
+```bash
+lein with-profile +dev,+cuda,+integration-cuda midje
+```
+
+OpenCL integration:
+```bash
+lein with-profile +dev,+opencl,+integration-opencl midje
+```
+
+On a machine with both OpenCL and CUDA available, all README integration tests
+can be run together:
+
+```bash
+lein with-profile +dev,+integration,+opencl,+integration-opencl,+cuda,+integration-cuda midje
+```
+
 ## Usage
 
 The basic usage is just to
@@ -287,7 +314,7 @@ myge
 ;   ┗                       ┛    
 
 (stick/describe myge)
-;=> {:entry-type :double, :matrix-type :ge, :n 2, :m 3, :options {:layout :row}}
+;=> {:entry-type :double, :kind :matrix, :matrix-type :ge, :n 2, :m 3, :options {:layout :row}}
 
 (exp/save-to-file! myge "/tmp/ge_desc_only.bin" {:omit-data true})
 ;=> nil

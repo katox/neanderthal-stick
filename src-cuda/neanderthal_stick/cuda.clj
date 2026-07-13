@@ -7,12 +7,15 @@
 ;;   You must not remove this notice, or any other, from this software.
 
 (ns neanderthal-stick.cuda
-  (:require [uncomplicate.commons.utils :refer [dragan-says-ex]]
+  (:require [taoensso.nippy :as nippy]
+            [uncomplicate.commons.utils :refer [dragan-says-ex]]
             [uncomplicate.neanderthal.core :as core]
             [uncomplicate.neanderthal.cuda]
             [neanderthal-stick.core :refer [ContainerInfo describe]]
-            [neanderthal-stick.internal.common :as common])
-  (:import (uncomplicate.neanderthal.internal.cpp.cuda.structures
+            [neanderthal-stick.internal.common :as common]
+            [neanderthal-stick.nippy-ext :as nippy-ext])
+  (:import (uncomplicate.neanderthal.internal.api CUVector CUMatrix)
+           (uncomplicate.neanderthal.internal.cpp.cuda.structures
              CUBlockVector CUGEMatrix CUUploMatrix)))
 
 (extend-protocol ContainerInfo
@@ -33,3 +36,22 @@
         :sy (update dx :options #(merge % {:uplo uplo}))
         (dragan-says-ex (format "%s is not a valid matrix type. Please send a bug report." matrix-type)
                         {:type matrix-type})))))
+
+(nippy/extend-freeze CUVector
+                     :uncomplicate.neanderthal/CUVector
+                     [x data-output]
+                     (nippy-ext/freeze-through-native! data-output x))
+
+(nippy/extend-thaw :uncomplicate.neanderthal/CUVector
+                   [data-input]
+                   (nippy-ext/thaw-from-in! data-input))
+
+(nippy/extend-freeze CUMatrix
+                     :uncomplicate.neanderthal/CUMatrix
+                     [x data-output]
+                     (nippy-ext/freeze-through-native! data-output x))
+
+(nippy/extend-thaw :uncomplicate.neanderthal/CUMatrix
+                   [data-input]
+                   (nippy-ext/thaw-from-in! data-input))
+

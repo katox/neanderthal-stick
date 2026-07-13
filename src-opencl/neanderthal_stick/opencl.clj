@@ -7,12 +7,15 @@
 ;;   You must not remove this notice, or any other, from this software.
 
 (ns neanderthal-stick.opencl
-  (:require [uncomplicate.commons.utils :refer [dragan-says-ex]]
+  (:require [taoensso.nippy :as nippy]
+            [uncomplicate.commons.utils :refer [dragan-says-ex]]
             [uncomplicate.neanderthal.core :as core]
             [uncomplicate.neanderthal.opencl]
             [neanderthal-stick.internal.common :as common]
-            [neanderthal-stick.core :refer [ContainerInfo describe]])
-  (:import (uncomplicate.neanderthal.internal.device.clblock CLBlockVector CLGEMatrix CLUploMatrix)))
+            [neanderthal-stick.core :refer [ContainerInfo describe]]
+            [neanderthal-stick.nippy-ext :as nippy-ext])
+  (:import (uncomplicate.neanderthal.internal.api CLVector CLMatrix)
+           (uncomplicate.neanderthal.internal.device.clblock CLBlockVector CLGEMatrix CLUploMatrix)))
 
 (extend-protocol ContainerInfo
   CLBlockVector
@@ -32,3 +35,21 @@
         :sy (update dx :options #(merge % {:uplo uplo}))
         (dragan-says-ex (format "%s is not a valid matrix type. Please send a bug report." matrix-type)
                         {:type matrix-type})))))
+
+(nippy/extend-freeze CLVector
+                     :uncomplicate.neanderthal/CLVector
+                     [x data-output]
+                     (nippy-ext/freeze-through-native! data-output x))
+
+(nippy/extend-thaw :uncomplicate.neanderthal/CLVector
+                   [data-input]
+                   (nippy-ext/thaw-from-in! data-input))
+
+(nippy/extend-freeze CLMatrix
+                     :uncomplicate.neanderthal/CLMatrix
+                     [x data-output]
+                     (nippy-ext/freeze-through-native! data-output x))
+
+(nippy/extend-thaw :uncomplicate.neanderthal/CLMatrix
+                   [data-input]
+                   (nippy-ext/thaw-from-in! data-input))

@@ -39,7 +39,7 @@
   (transfer! x data-output)
   nil)
 
-(defn- freeze-through-native!
+(defn freeze-through-native!
   "Freeze `x` to `data-output` by using a temp copy in host memory if needed."
   [data-output x]
   (let [native-x (api/native x)]
@@ -49,7 +49,7 @@
         (when-not (identical? native-x x)
           (release native-x))))))
 
-(defn- thaw-from-in!
+(defn thaw-from-in!
   "Thaw a previously frozen descriptor from the `data-input to a new Neanderthal structure."
   [data-input]
   (let [factory *neanderthal-factory*
@@ -130,41 +130,5 @@
                      (freeze-to-out! data-output x))
 
 (nippy/extend-thaw :uncomplicate.neanderthal/RealDiagonalMatrix
-                   [data-input]
-                   (thaw-from-in! data-input))
-
-(nippy/extend-freeze uncomplicate.neanderthal.internal.api.CUVector
-                     :uncomplicate.neanderthal/CUVector
-                     [x data-output]
-                     (freeze-through-native! data-output x))
-
-(nippy/extend-thaw :uncomplicate.neanderthal/CUVector
-                   [data-input]
-                   (thaw-from-in! data-input))
-
-(nippy/extend-freeze uncomplicate.neanderthal.internal.api.CUMatrix
-                     :uncomplicate.neanderthal/CUMatrix
-                     [x data-output]
-                     (freeze-through-native! data-output x))
-
-(nippy/extend-thaw :uncomplicate.neanderthal/CUMatrix
-                   [data-input]
-                   (thaw-from-in! data-input))
-
-(nippy/extend-freeze uncomplicate.neanderthal.internal.api.CLVector
-                     :uncomplicate.neanderthal/CLVector
-                     [x data-output]
-                     (freeze-through-native! data-output x))
-
-(nippy/extend-thaw :uncomplicate.neanderthal/CLVector
-                   [data-input]
-                   (thaw-from-in! data-input))
-
-(nippy/extend-freeze uncomplicate.neanderthal.internal.api.CLMatrix
-                     :uncomplicate.neanderthal/CLMatrix
-                     [x data-output]
-                     (freeze-through-native! data-output x))
-
-(nippy/extend-thaw :uncomplicate.neanderthal/CLMatrix
                    [data-input]
                    (thaw-from-in! data-input))
